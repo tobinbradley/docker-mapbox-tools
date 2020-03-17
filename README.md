@@ -25,7 +25,7 @@ tippecanoe -zg -o greenways.mbtiles --drop-densest-as-needed greenways.geojson
 
 ## fontnik
 
-* I need something here to make output folders and loop through fonts etc.
+* Note the output folder needs to exist. I need to write a shell script to automate some of that nonsense. But I haven't.
 
 ```bash
 docker run -it -u `id -u $USER` --volume $(pwd):/data tobin/mapboxtools \
@@ -40,3 +40,8 @@ Inputs are fold with SVG files and an output folder
 docker run -it -u `id -u $USER` --volume $(pwd):/data tobin/mapboxtools \
 sprite.sh svg sprites
 ```
+
+### Notes
+
+* The volume you mount to `/data` needs to contain the input file/folder and output file/folder.
+* That volume should also have write permissions so Docker can put stuff there. I'd like to tell you I didn't `chmod -R 777 *` mine. But I can't.
