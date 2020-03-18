@@ -1,6 +1,6 @@
 # Dockerized Mapbox Tools
 
-Compiling Mapbox C tools can be painful. Let's fix that.
+Compiling Mapbox tools can be painful. Let's fix that.
 
 ## Build the Docker image
 
