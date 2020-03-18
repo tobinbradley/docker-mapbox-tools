@@ -48,4 +48,3 @@ sprite.sh svg sprites
 ### Notes
 
 * The volume you mount should have write permissions set so Docker can put stuff there. I'd like to tell you I didn't `chmod -R 777 *` mine. But I did.
-* The NodeJS version being used by the Docker image is 10, as that seems to be the latest Node release their are prebuilt `spritezero` and `fontnik` binaries for.
