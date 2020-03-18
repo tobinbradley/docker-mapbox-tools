@@ -1,6 +1,6 @@
 # Dockerized Mapbox Tools
 
-Compiling Mapbox C tools and be a pain in the butt. Let's fix that.
+Compiling Mapbox C tools can be painful. Let's fix that.
 
 ## Build the Docker image
 
@@ -25,16 +25,20 @@ tippecanoe -zg -o greenways.mbtiles --drop-densest-as-needed greenways.geojson
 
 ## fontnik
 
-* Note the output folder needs to exist. I need to write a shell script to automate some of that nonsense. But I haven't.
+`font.sh <input folder> <output folder>`
+
+The helper script scans the input folder for `*.ttf` fonts and places the font glyphs in the output folder.
 
 ```bash
 docker run -it -u `id -u $USER` --volume $(pwd):/data tobin/mapboxtools \
-build-glyphs OpenSans-Bold.ttf "glyphs/Open Sans Bold"
+font.sh fonts glyphs
 ```
 
 ## spritezero
 
-Inputs are fold with SVG files and an output folder
+`sprite.sh <input folder> <output folder>`
+
+The helper script scans `*.svg` in the input folder and places 1x and 2x sprites in the output folder.
 
 ```bash
 docker run -it -u `id -u $USER` --volume $(pwd):/data tobin/mapboxtools \
@@ -43,5 +47,5 @@ sprite.sh svg sprites
 
 ### Notes
 
-* The volume you mount to `/data` needs to contain the input file/folder and output file/folder.
-* That volume should also have write permissions so Docker can put stuff there. I'd like to tell you I didn't `chmod -R 777 *` mine. But I can't.
+* The volume you mount should have write permissions set so Docker can put stuff there. I'd like to tell you I didn't `chmod -R 777 *` mine. But I did.
+* The NodeJS version being used by the Docker image is 10, as that seems to be the latest Node release their are prebuilt `spritezero` and `fontnik` binaries for.
