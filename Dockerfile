@@ -23,8 +23,10 @@ RUN apt-get -y remove build-essential && apt-get clean
 # Copy scripts
 RUN mkdir -p /scripts
 COPY scripts/sprite.sh /scripts/sprite.sh
+COPY scripts/font.sh /scripts/font.sh
 COPY scripts/sprite.js /scripts/sprite.js
 RUN chmod +x /scripts/sprite.sh
+RUN chmod +x /scripts/font.sh
 
 # Set paths
 ENV NODE_PATH="/usr/local/lib/node_modules"
