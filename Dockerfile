@@ -1,27 +1,32 @@
-FROM node:10.19.0-buster
+FROM node:10.19.0-buster-slim
 
 # install packages
-RUN apt-get -y update && apt -y --no-install-recommends install build-essential
-
+RUN apt update \
+ && apt -y --no-install-recommends install \
+    ca-certificates \
+    build-essential \
+    git \
+    libsqlite3-dev \
+    zlib1g-dev \
 # Tippecanoe
-RUN mkdir -p /tmp/tippecanoe-src
-RUN git clone https://github.com/mapbox/tippecanoe.git /tmp/tippecanoe-src
-WORKDIR /tmp/tippecanoe-src
-RUN make && make install
-WORKDIR /
-RUN rm -rf /tmp/tippecanoe-src
-
+ && mkdir -p /tmp/tippecanoe-src \
+ && git clone https://github.com/mapbox/tippecanoe.git /tmp/tippecanoe-src \
+ && cd /tmp/tippecanoe-src \
+ && make \
+ && make install \
+ && cd ../ \
+ && rm -rf /tmp/tippecanoe-src \
 # Fontnik
-RUN npm -g config set user root && npm install -g fontnik
-
+ && npm -g config set user root \
+ && npm install -g fontnik \
 # spritezero
-RUN npm -g config set user root && npm install -g @mapbox/spritezero glob
-
+ && npm install -g @mapbox/spritezero glob \
 # Clean up
-RUN apt-get -y remove build-essential && apt-get clean
+ && apt purge -y git build-essential \
+ && rm -rf /var/lib/apt/lists/*
 
 # Copy scripts
-RUN mkdir -p /scripts
+WORKDIR /scripts
 COPY scripts/sprite.sh /scripts/sprite.sh
 COPY scripts/font.sh /scripts/font.sh
 COPY scripts/sprite.js /scripts/sprite.js
