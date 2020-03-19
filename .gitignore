@@ -106,3 +106,7 @@ dist
 # My stuff
 fonts
 glyphs
+svg
+sprites
+*.geojson
+*.mbtiles
